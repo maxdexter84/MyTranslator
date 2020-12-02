@@ -1,0 +1,51 @@
+package ru.maxdexter.mytranslator.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import geekbrains.ru.translator.model.data.SearchResult
+import ru.maxdexter.mytranslator.databinding.ListItemTranslatorBinding
+
+class MainAdapter(): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+    private var list: List<SearchResult>? = null
+    inner class ViewHolder(binding:ListItemTranslatorBinding ): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(data: SearchResult, ){
+
+            setItemClickListener {
+                onItemClickListener?.invoke(data)
+            }
+        }
+
+
+    }
+
+    fun setData(list: List<SearchResult>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ListItemTranslatorBinding.inflate(layoutInflater,parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+       val item = list?.get(position)
+        if (item != null) {
+            holder.bind(item)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list?.size ?: 0
+    }
+
+    private var onItemClickListener: ((SearchResult)->Unit)? = null
+
+    fun setItemClickListener(listener: ((SearchResult) -> Unit)){
+            onItemClickListener = listener
+    }
+
+}
