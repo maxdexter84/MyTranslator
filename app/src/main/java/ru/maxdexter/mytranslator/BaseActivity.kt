@@ -1,12 +1,10 @@
 package ru.maxdexter.mytranslator
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import geekbrains.ru.translator.model.data.DataModel
 import ru.maxdexter.mytranslator.contracts.Presenter
 import ru.maxdexter.mytranslator.contracts.View
-import ru.maxdexter.mytranslator.state.AppState
 
 abstract class BaseActivity<T : DataModel> : AppCompatActivity(), View {
 
