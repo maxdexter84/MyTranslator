@@ -1,15 +1,16 @@
-package ru.maxdexter.mytranslator
+package ru.maxdexter.mytranslator.ui
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.model.data.DataModel
-import kotlinx.android.synthetic.main.activity_main.*
+import ru.maxdexter.mytranslator.R
 import ru.maxdexter.mytranslator.adapter.MainAdapter
 import ru.maxdexter.mytranslator.contracts.Presenter
 import ru.maxdexter.mytranslator.contracts.View
 import ru.maxdexter.mytranslator.databinding.ActivityMainBinding
 import ru.maxdexter.mytranslator.presenter.MainPresenterImpl
+import ru.maxdexter.mytranslator.ui.fragments.BottomSheetFragment
 
 class MainActivity : BaseActivity<DataModel>() {
 
@@ -18,7 +19,15 @@ class MainActivity : BaseActivity<DataModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.searchFab.setOnClickListener {
+            val fragment = BottomSheetFragment.newInstance()
+            fragment.setClickListener {
+                presenter.getData(it,true)
+            }
+            supportFragmentManager.beginTransaction().add(fragment,"BOTTOM_SHEET").commitAllowingStateLoss()
+
+        }
         initRecycler()
 
     }
@@ -26,7 +35,7 @@ class MainActivity : BaseActivity<DataModel>() {
     private fun initRecycler() {
         adapter = MainAdapter()
         binding.recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(this)
+        binding.recycler.layoutManager = LinearLayoutManager(this)
     }
 
     override fun createPresenter(): Presenter<DataModel, View> {
@@ -48,7 +57,12 @@ class MainActivity : BaseActivity<DataModel>() {
                 }
             }
             is DataModel.Loading -> showViewLoading()
-            is DataModel.Error -> showViewError()
+            is DataModel.Error -> {
+                showViewError()
+                binding.reloadButton.setOnClickListener {
+                    recreate()
+                }
+            }
 
         }
     }

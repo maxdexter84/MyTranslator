@@ -1,4 +1,4 @@
-package ru.maxdexter.mytranslator
+package ru.maxdexter.mytranslator.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

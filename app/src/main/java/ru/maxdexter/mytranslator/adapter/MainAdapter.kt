@@ -8,10 +8,14 @@ import ru.maxdexter.mytranslator.databinding.ListItemTranslatorBinding
 
 class MainAdapter(): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
     private var list: List<SearchResult>? = null
-    inner class ViewHolder(binding:ListItemTranslatorBinding ): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private var binding:ListItemTranslatorBinding ): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: SearchResult, ){
 
+        fun bind(data: SearchResult){
+            binding.apply {
+                tvHeader.text = data.text
+                tvDescription.text = data.meanings?.get(0)?.translation?.translation
+            }
             setItemClickListener {
                 onItemClickListener?.invoke(data)
             }

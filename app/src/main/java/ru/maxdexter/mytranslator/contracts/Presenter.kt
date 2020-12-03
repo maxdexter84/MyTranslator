@@ -1,7 +1,6 @@
 package ru.maxdexter.mytranslator.contracts
 
 import geekbrains.ru.translator.model.data.DataModel
-import ru.maxdexter.mytranslator.state.AppState
 
 //Ничего не знает ни о контексте ни о фреймворке
 interface Presenter<T: DataModel, V: View> {

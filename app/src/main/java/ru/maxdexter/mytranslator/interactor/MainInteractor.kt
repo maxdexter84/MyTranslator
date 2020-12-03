@@ -5,7 +5,6 @@ import geekbrains.ru.translator.model.data.SearchResult
 import io.reactivex.Observable
 import ru.maxdexter.mytranslator.contracts.Interactor
 import ru.maxdexter.mytranslator.contracts.Repository
-import ru.maxdexter.mytranslator.state.AppState
 
 
 class MainInteractor(
