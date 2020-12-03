@@ -29,9 +29,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_bottom_sheet, container, false)
         binding.etSearch.addTextChangedListener(textWatcher)
-        binding.btnSearch.setOnClickListener {
-            onClickListener?.invoke(binding.etSearch.text.toString())
-        }
+
 
 
 
@@ -45,7 +43,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
     var textWatcher = object : TextWatcher{
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            binding.btnSearch.isEnabled = !s.isNullOrBlank()
+
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -53,7 +51,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         override fun afterTextChanged(s: Editable?) {
-
+            if (s != null) {
+                if (s.length >= 2){
+                    onClickListener?.invoke(s.toString())
+                }
+            }
         }
     }
 
