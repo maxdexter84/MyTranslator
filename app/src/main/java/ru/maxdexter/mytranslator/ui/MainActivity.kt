@@ -3,7 +3,7 @@ package ru.maxdexter.mytranslator.ui
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import geekbrains.ru.translator.model.data.DataModel
+import ru.maxdexter.mytranslator.model.DataState
 import ru.maxdexter.mytranslator.R
 import ru.maxdexter.mytranslator.adapter.MainAdapter
 import ru.maxdexter.mytranslator.contracts.Presenter
@@ -12,7 +12,7 @@ import ru.maxdexter.mytranslator.databinding.ActivityMainBinding
 import ru.maxdexter.mytranslator.presenter.MainPresenterImpl
 import ru.maxdexter.mytranslator.ui.fragments.BottomSheetFragment
 
-class MainActivity : BaseActivity<DataModel>() {
+class MainActivity : BaseActivity<DataState>() {
 
     private var adapter: MainAdapter? = null
     private lateinit var binding: ActivityMainBinding
@@ -38,14 +38,14 @@ class MainActivity : BaseActivity<DataModel>() {
         binding.recycler.layoutManager = LinearLayoutManager(this)
     }
 
-    override fun createPresenter(): Presenter<DataModel, View> {
+    override fun createPresenter(): Presenter<DataState, View> {
         return MainPresenterImpl()
     }
 
-    override fun renderData(dataModel: DataModel) {
-        when(dataModel){
-            is DataModel.Success ->{
-                val result = dataModel.data
+    override fun renderData(dataState: DataState) {
+        when(dataState){
+            is DataState.Success ->{
+                val result = dataState.data
                 if (result == null || result.isEmpty()) {
                     showViewError()
                 }else  {
@@ -56,8 +56,8 @@ class MainActivity : BaseActivity<DataModel>() {
                     }
                 }
             }
-            is DataModel.Loading -> showViewLoading()
-            is DataModel.Error -> {
+            is DataState.Loading -> showViewLoading()
+            is DataState.Error -> {
                 showViewError()
                 binding.reloadButton.setOnClickListener {
                     recreate()

@@ -1,8 +1,7 @@
 package ru.maxdexter.mytranslator.network
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import geekbrains.ru.translator.model.data.DataModel
-import geekbrains.ru.translator.model.data.SearchResult
+import ru.maxdexter.mytranslator.model.SearchResult
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

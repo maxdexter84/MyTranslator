@@ -1,4 +1,4 @@
-package geekbrains.ru.translator.model.data
+package ru.maxdexter.mytranslator.model
 
 import com.google.gson.annotations.SerializedName
 

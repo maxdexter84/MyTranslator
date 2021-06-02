@@ -1,4 +1,4 @@
-package geekbrains.ru.translator.rx
+package ru.maxdexter.mytranslator.rx
 
 import io.reactivex.Scheduler
 

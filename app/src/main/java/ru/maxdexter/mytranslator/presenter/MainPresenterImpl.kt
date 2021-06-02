@@ -1,24 +1,24 @@
 package ru.maxdexter.mytranslator.presenter
 
-import geekbrains.ru.translator.model.data.DataModel
-import geekbrains.ru.translator.model.datasource.DataSourceLocal
-import geekbrains.ru.translator.model.datasource.DataSourceRemote
-import geekbrains.ru.translator.rx.SchedulerProvider
-import ru.maxdexter.mytranslator.contracts.Presenter
-import ru.maxdexter.mytranslator.contracts.View
-import ru.maxdexter.mytranslator.interactor.MainInteractor
-import ru.maxdexter.mytranslator.repository.RepositoryImplementation
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
+import ru.maxdexter.mytranslator.contracts.Presenter
+import ru.maxdexter.mytranslator.contracts.View
+import ru.maxdexter.mytranslator.interactor.MainInteractor
+import ru.maxdexter.mytranslator.model.DataState
+import ru.maxdexter.mytranslator.repository.DataSourceLocal
+import ru.maxdexter.mytranslator.repository.DataSourceRemote
+import ru.maxdexter.mytranslator.repository.RepositoryImplementation
+import ru.maxdexter.mytranslator.rx.SchedulerProvider
 
-class MainPresenterImpl<T : DataModel, V : View>(
+class MainPresenterImpl<T : DataState, V : View>(
     private val interactor: MainInteractor = MainInteractor(
         RepositoryImplementation(DataSourceRemote()),
         RepositoryImplementation(DataSourceLocal())
     ),
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
-    protected val schedulerProvider: SchedulerProvider = SchedulerProvider()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable(),
+    private val schedulerProvider: SchedulerProvider = SchedulerProvider()
 ) : Presenter<T, V> {
 
     private var currentView: V? = null
@@ -47,17 +47,17 @@ class MainPresenterImpl<T : DataModel, V : View>(
     }
 
     private fun doOnSubscribe(): (Disposable) -> Unit =
-        { currentView?.renderData(DataModel.Loading(null)) }
+        { currentView?.renderData(DataState.Loading(null)) }
 
-    private fun getObserver(): DisposableObserver<DataModel> {
-        return object : DisposableObserver<DataModel>() {
+    private fun getObserver(): DisposableObserver<DataState> {
+        return object : DisposableObserver<DataState>() {
 
-            override fun onNext(data: DataModel) {
+            override fun onNext(data: DataState) {
                 currentView?.renderData(data)
             }
 
             override fun onError(e: Throwable) {
-                currentView?.renderData(DataModel.Error(e))
+                currentView?.renderData(DataState.Error(e))
             }
 
             override fun onComplete() {

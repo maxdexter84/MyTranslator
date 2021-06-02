@@ -3,15 +3,17 @@ package ru.maxdexter.mytranslator.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import geekbrains.ru.translator.model.data.SearchResult
+import ru.maxdexter.mytranslator.model.SearchResult
 import ru.maxdexter.mytranslator.databinding.ListItemTranslatorBinding
 
-class MainAdapter(): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
     private var list: List<SearchResult>? = null
-    inner class ViewHolder(private var binding:ListItemTranslatorBinding ): RecyclerView.ViewHolder(binding.root) {
+
+    inner class ViewHolder(private var binding: ListItemTranslatorBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(data: SearchResult){
+        fun bind(data: SearchResult) {
             binding.apply {
                 tvHeader.text = data.text
                 tvDescription.text = data.meanings?.get(0)?.translation?.translation
@@ -31,12 +33,12 @@ class MainAdapter(): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ListItemTranslatorBinding.inflate(layoutInflater,parent, false)
+        val binding = ListItemTranslatorBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       val item = list?.get(position)
+        val item = list?.get(position)
         if (item != null) {
             holder.bind(item)
         }
@@ -46,10 +48,10 @@ class MainAdapter(): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         return list?.size ?: 0
     }
 
-    private var onItemClickListener: ((SearchResult)->Unit)? = null
+    private var onItemClickListener: ((SearchResult) -> Unit)? = null
 
-    fun setItemClickListener(listener: ((SearchResult) -> Unit)){
-            onItemClickListener = listener
+    fun setItemClickListener(listener: ((SearchResult) -> Unit)) {
+        onItemClickListener = listener
     }
 
 }

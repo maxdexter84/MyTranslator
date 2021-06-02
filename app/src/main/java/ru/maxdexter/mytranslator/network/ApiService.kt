@@ -1,6 +1,6 @@
 package ru.maxdexter.mytranslator.network
 
-import geekbrains.ru.translator.model.data.SearchResult
+import ru.maxdexter.mytranslator.model.SearchResult
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
