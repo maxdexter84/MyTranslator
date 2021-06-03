@@ -18,9 +18,10 @@ fun main() {
 //
 //    range()
 
-   // interval()
-   // map()
-    repeat()
+    // interval()
+    // map()
+   // repeat()
+    catchError()
 }
 
 //Observable<T>
@@ -113,6 +114,20 @@ fun interval() {
     Thread.sleep(5000)
     interval.dispose()
     disposable.add(interval)
+}
+
+fun catchError() {
+    val digits = Observable
+        .just(5, 3, 7, 7, 0, 2, 11)
+        .map{i -> 25 / i} //деление на ноль
+        .retry(1) // в случае ошибки повторит попытку 1 раз
+       // .onErrorReturn { _ -> -1 } // в случае ошибки вернет -1 вместо вызова ошибки
+        .onErrorResumeNext(Observable.just(-5,-6,-7,-8))// в случае ошибки вернет результат из другого источника
+        .subscribe(
+        {s -> println(s)},
+        {t -> println(t.message)}
+    )
+    disposable.add(digits)
 }
 
 fun onDestroy() {
